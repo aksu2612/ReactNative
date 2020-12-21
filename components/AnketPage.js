@@ -17,35 +17,32 @@ class AnketPage extends Component  {
     const {data}=this.props.route.params
     this.setState({
       serveyID:data
-    }) 
+    })  
         this.Surveysfunc(data); 
   }  
-   Surveysfunc = async (data) => {  
-  
+   Surveysfunc = async (data) => {   
     try {
       let response = await fetch(
         'http://192.168.1.4:45455/api/SurveyInfoes/'+data
       );
-      let json = await response.json();
-     
-      this.setState({surveys:json}) ;  
+      let json = await response.json(); 
+      this.setState({surveys:json}) ;   
       return json;
     } catch (error) {
       console.error(error);
     } 
   }
  
- render(){ 
-  console.log(this.props.route.params )
+ render(){   
     const renderItem = ({ item }) => ( 
       <Item title={item} /> 
     ); 
   const Item = ({ title }) => ( 
     <View style={styles.item}>
       <TouchableOpacity onPress={() => {
-           this.state.surveys.ID=title.ID;  
-           this.props.navigation.navigate('AnketSoruPage',{data:title.MaxSure} );
-    }}>
+           this.state.surveys=title;
+           this.props.navigation.navigate('AnketSoruPage',{data:this.state.surveys});
+       }}>
       <Text style={styles.title}>{title.AnketAdi}</Text>
       </TouchableOpacity>
     </View> 
@@ -72,7 +69,7 @@ class AnketPage extends Component  {
       marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-      backgroundColor: '#f9c2ff',
+      backgroundColor: '#6ebb83',
       padding: 20,
       marginVertical: 8,
       marginHorizontal: 16,

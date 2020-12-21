@@ -7,20 +7,19 @@ import { TextInput } from 'react-native-gesture-handler';
 import DropdownMenu from 'react-native-dropdown-menu'; 
 import { LogBox } from 'react-native';
 import AnketPage from './components/AnketPage';
-import Bolge from './components/Bolge'
-import SinavPage from './components/SinavPage'
-import AnketSinavPage from './components/AnketSinavPage'
-let newData=[];
-let surveys=[] 
-let surveysQuestion=[];
+import Bolge from './components/Bolge';
+import SinavPage from './components/SinavPage';
+import AnketSinavPage from './components/AnketSinavPage';
+import AnketSoruPage from './components/AnketSoruPage';
+import AnketQuestion from './components/AnketQuestion'
+let newData=[]; 
 let user=[{
   Name: "asd",
   BolgeID:'',
   SurveyID:'',
   BelgeIDtxt:'',
   country:''
-}];
- 
+}]; 
 function  fillUserName(event ) {
   user.Name=event;
  console.log(event)
@@ -100,66 +99,7 @@ console.log("asdku");
     </View>
   );
 } 
-} 
-  
-
-function AnketSoruPage({ navigation }) {   
- 
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}> 
-      <Button
-        title="Ankete Başla"
-        onPress={() => navigation.navigate('AnketQuestions')}
-      /> 
-      <Button
-        title="Geri"
-        onPress={() => navigation.navigate('AnketSinavPage')}
-      /> 
-    </View>
-  );
-} 
-
-
-
-function AnketQuestions({ navigation }) {   
-   
-  const renderItem = ({ item }) => (
-    
-    <Item title={item} /> 
-  );
-  
-const Item = ({ title }) => (
-  
-  <View style={styles.item}>
-    <TouchableOpacity onPress={() => {
-         surveys.ID=title.ID;  
-      navigation.navigate('AnketSoruPage');
-  }}>
-    <Text style={styles.title}>{title.QuestionText}</Text>
-    </TouchableOpacity>
-  </View>
-
-);
-  
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>   
-
- 
-      <SafeAreaView style={styles.container}> 
-          <FlatList 
-            data={surveysQuestion}
-            renderItem={renderItem}
-            keyExtractor={item => item.ID.toString()}
-          /> 
-        </SafeAreaView>  
-        <Button
-          title="Go to Notifications"
-          onPress={() => navigation.navigate('AnketSinavPage')}
-        /> 
-      </View>
-    );
-  } 
-  
+}  
 const Stack = createStackNavigator();
 
 class MyStack extends Component {
@@ -170,8 +110,7 @@ class MyStack extends Component {
     };
   }
 
-render() {
- 
+render() { 
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -180,8 +119,7 @@ render() {
       <Stack.Screen name="AnketPage" component={AnketPage}/>
       <Stack.Screen name="SinavPage" component={SinavPage} /> 
       <Stack.Screen name="AnketSoruPage" component={AnketSoruPage} /> 
-      <Stack.Screen name="AnketQuestions" component={AnketQuestions} /> 
-   
+      <Stack.Screen name="AnketQuestion" component={AnketQuestion} />  
     </Stack.Navigator>
   );
 } }
@@ -206,7 +144,7 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#6ebb83',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,

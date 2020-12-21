@@ -1,48 +1,38 @@
-
 import React , { Component } from 'react';
-import { Button, View } from 'react-native';  
-let surveysQuestion=[];
-
-
-
+import { Button, View,Text,TouchableOpacity } from 'react-native';  
+import CircularTimer from 'react-native-circular-timer';
+ 
 class AnketSoruPage extends Component  {   
     constructor(props) {
         super(props);
-        this.getSurveyID=this.getSurveyID.bind(this);
+     this.state={
+       question:this.props.route.params
+     }
+    }  
+    componentDidMount(){
+      const {data}=this.props.route.params
+        this.setState({
+          MaxSure:data 
+        })
+      console.log(data.MaxSure)
     }
-  componentDidMount(){
   
-    this.getSurveyID();
-    
-  }
-   getSurveyID= async () => {
-        try {
-          let response = await fetch(
-            'http://192.168.1.4:45455//api/QuestionTypeFiveChoseSurveys'
-          );
-          let json = await response.json(); 
-          surveysQuestion=json;   
-           console.log(json)
-          return json;
-        } catch (error) {
-          console.error(error);
-        } 
-      }
-       
     render(){  
-    console.log(this.props.route.params )
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}> 
-        <Button
-          title="Ankete Başla"
-          onPress={() => this.props.navigation.navigate('AnketQuestions' )}
-        /> 
-        <Button
-          title="Geri"
-          onPress={() => this.props.navigation.navigate('Notifications')}
-        /> 
-      </View>
-    );
-  } 
- }
+      const {data}=this.props.route.params  
+      return (
+        <View style={{  flex:1, alignItems: 'center', justifyContent: 'center' }}>  
+        <Text>AnketSüresi</Text>
+        <Text>{data.MaxSure}</Text>
+          <Button
+            title="Ankete Başla"
+            onPress={() => this.props.navigation.navigate('AnketQuestion',{data:data})}
+          /> 
+          <Button
+            title="Geri"
+            onPress={() => this.props.navigation.navigate('Notifications')}
+          /> 
+        </View>
+      );
+    } 
+  }
  export default AnketSoruPage;
