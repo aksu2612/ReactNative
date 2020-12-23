@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
 import { Button, View,Text ,TouchableOpacity} from 'react-native'; 
 import { SafeAreaView, FlatList, StyleSheet, StatusBar,Animated } from 'react-native';
-let newData=[];
+ 
 let exams=[];
 class SinavPage extends Component {  
     constructor(props) {
@@ -42,8 +42,8 @@ const Item = ({ title }) => (
   
   <View style={styles.item}>
     <TouchableOpacity onPress={() => {
-          this.state.examQuestions.ID=title.ID;  
-      navigation.navigate('AnketSoruPage');
+          this.state.examQuestions =title ;   
+      this.props.navigation.navigate('SurveyQuestion',{ data:this.state.examQuestions});
   }}>
     <Text style={styles.title}>{title.SinavAdi}</Text>
     </TouchableOpacity>

@@ -11,7 +11,9 @@ import Bolge from './components/Bolge';
 import SinavPage from './components/SinavPage';
 import AnketSinavPage from './components/AnketSinavPage';
 import AnketSoruPage from './components/AnketSoruPage';
-import AnketQuestion from './components/AnketQuestion'
+import AnketQuestion from './components/AnketQuestion';
+import SurveyQuestion from './components/SurveyQuestion';
+
 let newData=[]; 
 let user=[{
   Name: "asd",
@@ -120,6 +122,7 @@ render() {
       <Stack.Screen name="SinavPage" component={SinavPage} /> 
       <Stack.Screen name="AnketSoruPage" component={AnketSoruPage} /> 
       <Stack.Screen name="AnketQuestion" component={AnketQuestion} />  
+      <Stack.Screen name="SurveyQuestion" component={SurveyQuestion} /> 
     </Stack.Navigator>
   );
 } }

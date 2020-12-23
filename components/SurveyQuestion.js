@@ -7,7 +7,12 @@ import RadioButtonRN from 'radio-buttons-react-native';
 let  surveysQuestionText=[] ;
 let  surveysQuestionArray=[] ;
 let asd=[];
-  class AnketQuestion extends Component {
+let option1=''
+let option2=''
+let option3=''
+let option4=''
+let option5=''
+  class SurveyQuestion extends Component {
       constructor(props) {
           super(props);
           this.state={
@@ -16,45 +21,53 @@ let asd=[];
            check:'',
            data : [
             {
-              label: 'EVET',
-              value:1,
+              label: option1,
+              value:option1,
               ID:0
              },
              {
-              label: 'HAYIR',
-              value:0,
+              label: option2,
+              value:option2,
               ID:0
-             }
+             } ,
+               {
+                label: option3,
+                value:option3,
+                ID:0
+               },
+               {
+                label: option4,
+                value:option4,
+                ID:0
+               }, 
+                   {
+                label: option5,
+                value:option5,
+                ID:0
+               },
             ], 
               QuestionID:0,
               ParticipantID:0,
               Answer:'' 
-          }
-          this.data = [
-            { title: "Tab1", key: "item1", color: "blue" },
-            { title: "Tab2", key: "item2", color: "yellow" }
-          ];
+          } 
+     
           this.getSurveyID= this.getSurveyID.bind(this); 
           this.submitAnswers=this.submitAnswers.bind(this)
       }
       componentDidMount(){
        this.getSurveyID(); 
-    
+   
       }
       getSurveyID= async () => {
-        const {data}=this.props.route.params 
-        this.setState({
-          MaxSure:data.MaxSure
-        })
+        const {data}=this.props.route.params  
+     
+   
         try {  
           let response = await fetch(
-            'http://192.168.1.4:45455//api/QuestionTypeYesNoes/'+data.ID
+            'http://192.168.1.4:45455//api/QuestionTypeFiveChoseExams/'+data.Id
           );
           let json = await response.json(); 
           this.setState({surveysQuestion:json});    
-            this.state.surveysQuestion.map((e)=>{
-              surveysQuestionText.push(e.QuestionText)
-            })
           return json;
         } catch (error) {
           console.error(error);
@@ -65,54 +78,65 @@ let asd=[];
         if (this._timerRef) this._timerRef.restart();
       };
       submitAnswers(a){
-        console.log(a);
-        this.state.surveysQuestion.map((e)=>{
-             this.setState({
-              QuestionID:e.ID,
-              ParticipantID:0,
-              Answer:e.Answer
-            })
-        }) 
-        fetch('http://192.168.1.4:45455//api/QuestionTypeFiveChoseSurvey/', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            firstParam: 'yourValue',
-            secondParam: 'yourOtherValue'
-          })
-        });
-        console.log(this.state.surveysQuestion) 
-        alert("Anket Kaydedildi!");
-
+      
+       
       }
     render() { 
+    
         const renderItem = ({ item }) => ( 
           <Item title={item} /> 
         ); 
      
         const Item = ({ title }) => ( 
-          <View>
+          <View>{
+                  this.state.surveysQuestion.map((e)=>{ 
+            option1=title.Option1
+            option2=title.Option2
+            option3=title.Option3
+            option4=title.Option4
+            option5=title.Option5
+        })
+              }
             <View style={{marginVertical:8,padding: 30,backgroundColor:'#6ebb83'}}> 
               <Text style={styles.title}>{title.QuestionText}</Text> 
             </View>
             <View>
               <RadioButtonRN
-                  data={this.state.data}
+                  data={[
+                    {
+                      label: option1,
+                      value:option1,
+                      ID:0
+                     },
+                     {
+                      label: option2,
+                      value:option2,
+                      ID:0
+                     } ,
+                     {
+                      label: option3,
+                      value:option3,
+                      ID:0
+                     },
+                     {
+                      label: option4,
+                      value:option4,
+                      ID:0
+                     }, 
+                     {
+                      label: option5,
+                      value:option5,
+                      ID:0
+                     },
+                    ]}
                   selectedBtn={(e) => 
                   {   
-                    title.Answer =e.value;  
+                    title.CorrectAnswer =e.value;  
                   }}
                 /> 
             </View>  
           </View> 
-        ); 
-        let hms = this.state.MaxSure;    
-        let a = hms.split(':');   
-        let seconds = ((+a[1]) * 60 );   
-  
+        );  
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}> 
           <View> 
@@ -131,7 +155,7 @@ let asd=[];
             <FlatList 
               data={this.state.surveysQuestion}
               renderItem={renderItem}
-              keyExtractor={item => item.ID.toString()}
+              keyExtractor={item => item.Id.toString()}
             /> 
           </SafeAreaView>  
           <Button
@@ -159,4 +183,4 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
 });
-export default AnketQuestion
+export default SurveyQuestion
