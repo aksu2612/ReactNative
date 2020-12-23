@@ -12,7 +12,7 @@ let option2=''
 let option3=''
 let option4=''
 let option5=''
-  class SurveyQuestion extends Component {
+  class ExamQuestion extends Component {
       constructor(props) {
           super(props);
           this.state={
@@ -183,4 +183,4 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
 });
-export default SurveyQuestion
+export default ExamQuestion

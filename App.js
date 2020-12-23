@@ -12,7 +12,7 @@ import SinavPage from './components/SinavPage';
 import AnketSinavPage from './components/AnketSinavPage';
 import AnketSoruPage from './components/AnketSoruPage';
 import AnketQuestion from './components/AnketQuestion';
-import SurveyQuestion from './components/SurveyQuestion';
+import ExamQuestion from './components/ExamQuestion';
 
 let newData=[]; 
 let user=[{
@@ -122,7 +122,7 @@ render() {
       <Stack.Screen name="SinavPage" component={SinavPage} /> 
       <Stack.Screen name="AnketSoruPage" component={AnketSoruPage} /> 
       <Stack.Screen name="AnketQuestion" component={AnketQuestion} />  
-      <Stack.Screen name="SurveyQuestion" component={SurveyQuestion} /> 
+      <Stack.Screen name="ExamQuestion" component={ExamQuestion} /> 
     </Stack.Navigator>
   );
 } }

@@ -43,7 +43,7 @@ const Item = ({ title }) => (
   <View style={styles.item}>
     <TouchableOpacity onPress={() => {
           this.state.examQuestions =title ;   
-      this.props.navigation.navigate('SurveyQuestion',{ data:this.state.examQuestions});
+      this.props.navigation.navigate('ExamQuestion',{ data:this.state.examQuestions});
   }}>
     <Text style={styles.title}>{title.SinavAdi}</Text>
     </TouchableOpacity>
