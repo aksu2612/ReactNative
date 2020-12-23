@@ -60,7 +60,7 @@ class HomeScreen extends Component {
      
   }
   handlechange(){
-console.log("asdku");
+
   }
   render(){    
        console.log(this.state.BolgeArray)
@@ -79,7 +79,7 @@ console.log("asdku");
          > 
        </TextInput>  
          <DropdownMenu  
-              onChange={(data)=>this.handlechange(data)}
+              onChange={(data)=>{this.handlechange(data)}}
               style={{flex: 1}}
               bgColor={'white'}
               tintColor={'#666666'}

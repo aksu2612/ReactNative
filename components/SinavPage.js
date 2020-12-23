@@ -6,6 +6,9 @@ let exams=[];
 class SinavPage extends Component {  
     constructor(props) {
         super(props);
+        this.state={
+          examQuestions:[]
+        }
         this.getExam=this.getExam.bind(this);
     }
     componentDidMount(){
@@ -17,7 +20,10 @@ class SinavPage extends Component {
             'http://192.168.1.4:45455//api/ExamInfoes'
           );
           let json = await response.json(); 
-          exams=json;   
+          exams=json; 
+          this.setState({
+            examQuestions:json 
+          })
            console.log(json)
           return json;
         } catch (error) {
@@ -36,7 +42,7 @@ const Item = ({ title }) => (
   
   <View style={styles.item}>
     <TouchableOpacity onPress={() => {
-         exams.ID=title.ID;  
+          this.state.examQuestions.ID=title.ID;  
       navigation.navigate('AnketSoruPage');
   }}>
     <Text style={styles.title}>{title.SinavAdi}</Text>
@@ -49,7 +55,7 @@ const Item = ({ title }) => (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>  
     <SafeAreaView style={styles.container}> 
         <FlatList 
-          data={exams}
+          data={ this.state.examQuestions}
           renderItem={renderItem}
           keyExtractor={item => item.Id.toString()}
         /> 
