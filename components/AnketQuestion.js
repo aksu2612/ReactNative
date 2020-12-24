@@ -4,15 +4,15 @@ import { Button, View,Text ,TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView, FlatList, StyleSheet, StatusBar,Animated } from 'react-native';
 import CircularTimer from 'react-native-circular-timer'; 
 import RadioButtonRN from 'radio-buttons-react-native';
-let  surveysQuestionText=[] ;
-let  surveysQuestionArray=[] ;
-let asd=[];
+let  surveysQuestionText=[] ; 
+let asd=[ {  BolgeID:0,  Name:'',}];
   class AnketQuestion extends Component {
       constructor(props) {
           super(props);
           this.state={
             MaxSure:'',
             surveysQuestion:[], 
+            person:[],
            check:'',
            data : [
             {
@@ -29,11 +29,7 @@ let asd=[];
               QuestionID:0,
               ParticipantID:0,
               Answer:'' 
-          }
-          this.data = [
-            { title: "Tab1", key: "item1", color: "blue" },
-            { title: "Tab2", key: "item2", color: "yellow" }
-          ];
+          } 
           this.getSurveyID= this.getSurveyID.bind(this); 
           this.submitAnswers=this.submitAnswers.bind(this)
       }
@@ -41,7 +37,7 @@ let asd=[];
        this.getSurveyID(); 
     
       }
-      getSurveyID= async () => {
+      getSurveyID= async () => { 
         const {data}=this.props.route.params 
         this.setState({
           MaxSure:data.MaxSure
@@ -60,33 +56,37 @@ let asd=[];
           console.error(error);
         }  
       } 
+
+      
       onChangeTab = index => {};
       _restartTimer = () => {
         if (this._timerRef) this._timerRef.restart();
       };
-      submitAnswers(a){
-        console.log(a);
+      submitAnswers(){  
         this.state.surveysQuestion.map((e)=>{
-             this.setState({
+        let question={ 
               QuestionID:e.ID,
-              ParticipantID:0,
-              Answer:e.Answer
-            })
-        }) 
-        fetch('http://192.168.1.4:45455//api/QuestionTypeFiveChoseSurvey/', {
+              ParticipantID:global.user,
+              AnswerQuestion:e.Answer
+            }   
+            console.log("click");
+       
+        fetch('http://192.168.1.4:45455//api/Answers/', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            firstParam: 'yourValue',
-            secondParam: 'yourOtherValue'
+            id:0, 
+            QuestionID: question.QuestionID,
+            ParticipantID:global.user,
+            AnswerQuestion:question.AnswerQuestion
           })
-        });
-        console.log(this.state.surveysQuestion) 
-        alert("Anket Kaydedildi!");
-
+        }).catch(err=>console.log(err)); 
+      }) 
+      alert("Anket Başarıyla Kaydedildi");
+      this.props.navigation.navigate('AnketSinavPage')
       }
     render() { 
         const renderItem = ({ item }) => ( 
@@ -136,8 +136,8 @@ let asd=[];
           </SafeAreaView>  
           <Button
             title="Anketi Bitir"
-            onPress={() =>{ this.submitAnswers(asd);
-               this.props.navigation.navigate('AnketPage')
+            onPress={() =>{ this.submitAnswers();
+             
               }}
           /> 
       </View>

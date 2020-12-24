@@ -22,11 +22,14 @@ let user=[{
   BelgeIDtxt:'',
   country:''
 }]; 
+
 function  fillUserName(event ) {
-  user.Name=event;
+  user.Name=event; 
+  global.MyVar =user.Name;
  console.log(event)
  
 }
+
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +40,7 @@ class HomeScreen extends Component {
       selectedValue:'',
   
     } 
+   
   this.Bolges=this.Bolges.bind(this);
   this.handlechange=this.handlechange.bind(this); 
   }
@@ -60,6 +64,10 @@ class HomeScreen extends Component {
     LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
       this.Bolges();   
      
+  }
+  submitPerson(){
+
+
   }
   handlechange(){
 
@@ -96,7 +104,7 @@ class HomeScreen extends Component {
         </DropdownMenu>  
       <Button
         title="Giriş"
-        onPress={() =>  this.props.navigation.navigate('Bolge') }
+        onPress={() => {this.submitPerson(); this.props.navigation.navigate('Bolge')} }
         />
     </View>
   );

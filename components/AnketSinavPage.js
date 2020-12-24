@@ -14,12 +14,42 @@ let user=[{
   class AnketSinavPage extends Component {
     constructor(props) {
         super(props); 
+    
+    }
+    componentDidMount(){
+      const {data}=this.props.route.params   
+      let params={ 
+        Name:global.MyVar,
+        BolgeID:data
+      }  
+      fetch('http://192.168.1.4:45455//api/Participants/', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id:0, 
+          Name: params.Name,
+          BolgeID:params.BolgeID
+         
+        })
+      }).then(response=>response.json())
+      .then(response=>{global.user=response.ID; })
+
+ 
+         
+
+
+      global.user=data; 
+      console.log(global.user+"useer");
     }
   
   
     render() {  
-    const {data}=this.props.route.params
-    console.log(data+"id mi");
+
+      const {data}=this.props.route.params   
+  
         return (
           <View style={styles.container}>
             <Button

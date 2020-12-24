@@ -3,10 +3,7 @@ import React , { Component } from 'react';
 import { Button, View,Text ,TouchableOpacity, Alert } from 'react-native'; 
 import { SafeAreaView, FlatList, StyleSheet, StatusBar,Animated } from 'react-native';
 import CircularTimer from 'react-native-circular-timer'; 
-import RadioButtonRN from 'radio-buttons-react-native';
-let  surveysQuestionText=[] ;
-let  surveysQuestionArray=[] ;
-let asd=[];
+import RadioButtonRN from 'radio-buttons-react-native';  
 let option1=''
 let option2=''
 let option3=''
@@ -19,68 +16,69 @@ let option5=''
             MaxSure:'',
             surveysQuestion:[], 
            check:'',
-           data : [
-            {
-              label: option1,
-              value:option1,
-              ID:0
-             },
-             {
-              label: option2,
-              value:option2,
-              ID:0
-             } ,
-               {
-                label: option3,
-                value:option3,
-                ID:0
-               },
-               {
-                label: option4,
-                value:option4,
-                ID:0
-               }, 
-                   {
-                label: option5,
-                value:option5,
-                ID:0
-               },
-            ], 
+           data :
+           [
+           {  label: option1,  value:option1,  ID:0 },
+           {  label: option2,  value:option2,  ID:0 } ,
+           {  label: option3,  value:option3,  ID:0 },
+           {  label: option4,  value:option4,  ID:0 }, 
+           {  label: option5,  value:option5,  ID:0 }, 
+           ], 
+            person:[],
               QuestionID:0,
               ParticipantID:0,
               Answer:'' 
-          } 
-     
-          this.getSurveyID= this.getSurveyID.bind(this); 
+          }  
+          this.getSurveyID= this.getSurveyID.bind(this);  
           this.submitAnswers=this.submitAnswers.bind(this)
       }
       componentDidMount(){
-       this.getSurveyID(); 
-   
+       this.getSurveyID();  
       }
       getSurveyID= async () => {
-        const {data}=this.props.route.params  
-     
-   
+        const {data}=this.props.route.params   
         try {  
           let response = await fetch(
             'http://192.168.1.4:45455//api/QuestionTypeFiveChoseExams/'+data.Id
           );
           let json = await response.json(); 
-          this.setState({surveysQuestion:json});    
+          this.setState({surveysQuestion:json});   
           return json;
         } catch (error) {
           console.error(error);
         }  
-      } 
+      }  
+      
       onChangeTab = index => {};
       _restartTimer = () => {
         if (this._timerRef) this._timerRef.restart();
       };
-      submitAnswers(a){
-      
-       
-      }
+      submitAnswers(){   
+          const {data}=this.props.route.params  
+          this.state.surveysQuestion.map((e)=>{
+          let question={ 
+            QuestionID:e.Id,
+            ParticipantID:global.user,
+            AnswerQuestion:e.CorrectAnswer, 
+          }     
+      fetch('http://192.168.1.4:45455//api/AnswerExams/', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id:0, 
+          QuestionID: question.QuestionID,
+          ParticipantID:global.user,
+          AnswerQuestion:question.AnswerQuestion, 
+        })
+      }).catch(err=>console.log(err)); 
+    }) 
+    alert("Sınav Başarıyla Kaydedildi");
+    this.props.navigation.navigate('AnketSinavPage')
+    }
+  
     render() { 
     
         const renderItem = ({ item }) => ( 
@@ -90,12 +88,12 @@ let option5=''
         const Item = ({ title }) => ( 
           <View>{
                   this.state.surveysQuestion.map((e)=>{ 
-            option1=title.Option1
-            option2=title.Option2
-            option3=title.Option3
-            option4=title.Option4
-            option5=title.Option5
-        })
+                      option1=title.Option1
+                      option2=title.Option2
+                      option3=title.Option3
+                      option4=title.Option4
+                      option5=title.Option5
+                  })
               }
             <View style={{marginVertical:8,padding: 30,backgroundColor:'#6ebb83'}}> 
               <Text style={styles.title}>{title.QuestionText}</Text> 
@@ -159,9 +157,9 @@ let option5=''
             /> 
           </SafeAreaView>  
           <Button
-            title="Anketi Bitir"
-            onPress={() =>{ this.submitAnswers(asd);
-               this.props.navigation.navigate('AnketPage')
+            title="Sınavı Bitir"
+            onPress={() =>{ this.submitAnswers();
+       
               }}
           /> 
       </View>
