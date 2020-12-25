@@ -48,10 +48,9 @@ let user=[{
   
     render() {  
 
-      const {data}=this.props.route.params   
-  
+      const {data}=this.props.route.params    
         return (
-          <View style={styles.container}>
+          <View style={styles.container }>
             <Button
               title="AnketPage" 
               onPress={() =>this.props.navigation.navigate('AnketPage',{data:data})}

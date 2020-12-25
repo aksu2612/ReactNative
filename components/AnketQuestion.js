@@ -64,10 +64,12 @@ let asd=[ {  BolgeID:0,  Name:'',}];
       };
       submitAnswers(){  
         this.state.surveysQuestion.map((e)=>{
+          console.log(e.QuestionTypeID);
         let question={ 
               QuestionID:e.ID,
               ParticipantID:global.user,
-              AnswerQuestion:e.Answer
+              AnswerQuestion:e.Answer,
+              QuestionTypeID:e.QuestionTypeID
             }   
             console.log("click");
        
@@ -81,7 +83,8 @@ let asd=[ {  BolgeID:0,  Name:'',}];
             id:0, 
             QuestionID: question.QuestionID,
             ParticipantID:global.user,
-            AnswerQuestion:question.AnswerQuestion
+            AnswerQuestion:question.AnswerQuestion,
+            QuestionTypeID:question.QuestionTypeID
           })
         }).catch(err=>console.log(err)); 
       }) 
